@@ -1,16 +1,14 @@
 defmodule Day02 do
-  def import_parse(filename) do
+  defp import_parse(filename) do
     File.read!(filename)
     |> String.split(",", trim: true)
     |> Enum.map(&String.to_integer/1)
   end
 
-  def process_step(list) do
-    process_step(list, 0)
-  end
+  defp process_step(list), do: process_step(list, 0)
 
-  def process_step(list, start_index) do
-    [opcode, index_one, index_two, target | _rest] = Enum.drop(list, start_index)
+  defp process_step(list, start_index) do
+    [opcode, index_one, index_two, target | _] = Enum.drop(list, start_index)
     elem_one = Enum.at(list, index_one)
     elem_two = Enum.at(list, index_two)
 
@@ -37,9 +35,8 @@ defmodule Day02 do
   end
 
   def check(target) do
-    target_reached? = fn n, v -> run(n, v) == target end
-    results = for n <- 0..99, v <- 0..99, target_reached?.(n, v), do: 100 * n + v
-    List.first(results)
+    for(n <- 0..99, v <- 0..99, run(n, v) == target, do: 100 * n + v)
+    |> List.first()
   end
 end
 
