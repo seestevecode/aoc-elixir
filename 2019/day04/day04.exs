@@ -16,7 +16,7 @@ defmodule Day04 do
   def number_ok?(number), do: Integer.digits(number) |> conditions_met?()
 
   def check_part1(from, to) do
-    Enum.filter(Enum.to_list(from..to), fn x -> number_ok?(x) end)
+    Enum.filter(Enum.to_list(from..to), &number_ok?/1)
     |> Enum.count()
   end
 end
