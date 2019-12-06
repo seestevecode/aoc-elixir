@@ -1,24 +1,32 @@
 defmodule Day04 do
-  def has_consec?([_]), do: false
-
-  def has_consec?([first, second | rest]) do
-    if first == second, do: true, else: has_consec?([second | rest])
-  end
-
   def has_descender?([_]), do: false
 
   def has_descender?([first, second | rest]) do
     if first > second, do: true, else: has_descender?([second | rest])
   end
 
-  def conditions_met?(list), do: has_consec?(list) and not has_descender?(list)
+  def count_groups(num) do
+    Integer.to_string(num)
+    |> String.graphemes()
+    |> Enum.chunk_by(&(&1))
+    |> Enum.map(&Enum.count/1)
+  end
 
-  def number_ok?(number), do: Integer.digits(number) |> conditions_met?()
+  def valid_p1?(num) do
+    not has_descender?(Integer.digits(num)) and Enum.any?(count_groups(num), fn x -> x >= 2 end)
+  end
 
-  def check_part1(from, to) do
-    Enum.filter(Enum.to_list(from..to), &number_ok?/1)
+  def valid_p2?(num) do
+    not has_descender?(Integer.digits(num)) and Enum.any?(count_groups(num), fn x -> x == 2 end)
+  end
+
+  def check(from, to, valid_fun) do
+    Enum.to_list(from..to)
+    |> Enum.filter(valid_fun)
     |> Enum.count()
   end
+
 end
 
-IO.puts("Part 1: #{Day04.check_part1(245_182, 790_572)}")
+IO.puts("Part 1: #{Day04.check(245_182, 790_572, &Day04.valid_p1?/1)}")
+IO.puts("Part 2: #{Day04.check(245_182, 790_572, &Day04.valid_p2?/1)}")
