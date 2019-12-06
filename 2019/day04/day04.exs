@@ -13,11 +13,11 @@ defmodule Day04 do
   end
 
   def valid_p1?(num) do
-    not has_descender?(Integer.digits(num)) and Enum.any?(count_groups(num), fn x -> x >= 2 end)
+    not has_descender?(Integer.digits(num)) and Enum.any?(count_groups(num), &(&1 >= 2))
   end
 
   def valid_p2?(num) do
-    not has_descender?(Integer.digits(num)) and Enum.any?(count_groups(num), fn x -> x == 2 end)
+    not has_descender?(Integer.digits(num)) and Enum.any?(count_groups(num), &(&1 == 2))
   end
 
   def check(from, to, valid_fun) do
