@@ -23,6 +23,23 @@ defmodule Day08 do
 
     count_digits(low_zero_layer, 1) * count_digits(low_zero_layer, 2)
   end
+
+  defp get_visible_pixel(layered_pixels) do
+    Enum.drop_while(layered_pixels, fn x -> x == 2 end) |> List.first()
+  end
+
+  def part_two do
+    import_parse("input.txt")
+    |> Enum.chunk_every(25 * 6)
+    |> Enum.zip()
+    |> Enum.map(&Tuple.to_list/1)
+    |> Enum.map(&get_visible_pixel/1)
+    |> Enum.chunk_every(25)
+  end
+
+  # TODO: Properly render the output for part two
 end
 
 IO.puts("Part one: #{Day08.part_one()}")
+IO.puts("Part two:\n")
+IO.inspect(Day08.part_two())
