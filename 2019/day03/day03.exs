@@ -38,11 +38,7 @@ defmodule Day03 do
     |> MapSet.new()
   end
 
-  def manhatten_distance({from_x, from_y}, {to_x, to_y}) do
-    abs(to_x - from_x) + abs(to_y - from_y)
-  end
-
-  def manhatten_to_start(from), do: manhatten_distance(from, {0, 0})
+  def manhatten({a, b}, {x, y}), do: abs(x - a) + abs(y - b)
 
   def part_one(filename) do
     [path1_instr, path2_instr] = import_parse(filename)
@@ -52,7 +48,7 @@ defmodule Day03 do
     MapSet.intersection(path1, path2)
     |> MapSet.to_list()
     |> List.delete({0, 0})
-    |> Enum.map(&manhatten_to_start/1)
+    |> Enum.map(&manhatten({0, 0}, &1))
     |> Enum.min(fn -> 0 end)
   end
 end
