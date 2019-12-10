@@ -5,34 +5,19 @@ defmodule Day01 do
     |> Enum.map(&String.to_integer/1)
   end
 
-  defp calc_fuel(mass) do
-    div(mass, 3) - 2
-  end
+  defp calc_fuel(mass), do: div(mass, 3) - 2
 
   def part_one(filename) do
-    import_parse(filename)
-    |> Enum.map(&calc_fuel/1)
-    |> Enum.sum()
-  end
-
-  defp calc_all_fuel(mass) do
-    calc_all_fuel(mass, 0)
+    import_parse(filename) |> Enum.map(&calc_fuel/1) |> Enum.sum()
   end
 
   defp calc_all_fuel(mass, accumulator) do
     fuel = calc_fuel(mass)
-
-    if fuel > 0 do
-      calc_all_fuel(fuel, accumulator + fuel)
-    else
-      accumulator
-    end
+    if(fuel > 0, do: calc_all_fuel(fuel, accumulator + fuel), else: accumulator)
   end
 
   def part_two(filename) do
-    import_parse(filename)
-    |> Enum.map(&calc_all_fuel/1)
-    |> Enum.sum()
+    import_parse(filename) |> Enum.map(&calc_all_fuel(&1, 0)) |> Enum.sum()
   end
 end
 
