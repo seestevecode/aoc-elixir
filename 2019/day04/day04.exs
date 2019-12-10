@@ -6,10 +6,7 @@ defmodule Day04 do
   def has_descender?([_]), do: false
 
   def count_groups(num) do
-    Integer.to_string(num)
-    |> String.graphemes()
-    |> Enum.chunk_by(& &1)
-    |> Enum.map(&Enum.count/1)
+    Integer.digits(num) |> Enum.chunk_by(& &1) |> Enum.map(&Enum.count/1)
   end
 
   def valid_p1?(num) do
