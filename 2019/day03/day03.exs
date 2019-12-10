@@ -40,17 +40,17 @@ defmodule Day03 do
 
   def manhatten({a, b}, {x, y}), do: abs(x - a) + abs(y - b)
 
-  def part_one(filename) do
+  def part_one(filename, origin) do
     [path1_instr, path2_instr] = import_parse(filename)
-    path1 = create_path(path1_instr, {0, 0})
-    path2 = create_path(path2_instr, {0, 0})
+    path1 = create_path(path1_instr, origin)
+    path2 = create_path(path2_instr, origin)
 
     MapSet.intersection(path1, path2)
     |> MapSet.to_list()
     |> List.delete({0, 0})
-    |> Enum.map(&manhatten({0, 0}, &1))
+    |> Enum.map(&manhatten(origin, &1))
     |> Enum.min(fn -> 0 end)
   end
 end
 
-IO.puts("Part 1: #{Day03.part_one("input.txt")}")
+IO.puts("Part 1: #{Day03.part_one("input.txt", {0,0})}")
