@@ -47,10 +47,10 @@ defmodule Day03 do
 
     MapSet.intersection(path1, path2)
     |> MapSet.to_list()
-    |> List.delete({0, 0})
+    |> List.delete(origin)
     |> Enum.map(&manhatten(origin, &1))
     |> Enum.min(fn -> 0 end)
   end
 end
 
-IO.puts("Part 1: #{Day03.part_one("input.txt", {0,0})}")
+IO.puts("Part 1: #{Day03.part_one("input.txt", {0, 0})}")
